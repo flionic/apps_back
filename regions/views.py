@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.template import loader
+from django.template import loader, Context
 
 from regions.ipapi import get_region
 from regions.utils import get_client_ip
@@ -11,7 +11,6 @@ from regions.models import LinksList
 
 def index(request):
     client_ip = get_client_ip(request)
-    client_ip = '46.211.108.219'
     client_country = get_region(client_ip)
 
     region_link = LinksList.objects.filter(country=client_country).first()
@@ -22,7 +21,8 @@ def index(request):
         return redirect(region_link.url)
 
     template = loader.get_template('index.html')
-    return HttpResponse(template.render())
+    context = Context({"country": client_country})
+    return HttpResponse(template.render(context))
 
 
 def privacy_policy(request):
