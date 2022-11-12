@@ -18,4 +18,4 @@ class LinksList(models.Model):
         verbose_name_plural = 'Geo Links'
 
     def __str__(self):
-        return f'[{self.country}] {self.name}'
+        return f'[{self.country}] {self.name} - {self.counter} jumps'
