@@ -30,7 +30,7 @@ DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = []
 
-if not DEBUG:
+if DEBUG is False:
     ALLOWED_HOSTS = ['pm-dt.com.ua']
     CSRF_TRUSTED_ORIGINS = ['https://pm-dt.com.ua']
 
