@@ -21,7 +21,7 @@ def index(request):
         return redirect(region_link.url)
 
     template = loader.get_template('index.html')
-    context = Context({"country": client_country})
+    context = {"country": client_country}
     return HttpResponse(template.render(context))
 
 
