@@ -26,13 +26,13 @@ load_dotenv(override=True)
 SECRET_KEY = 'django-insecure-aai!!_&drp!!$p@t^b2o4b2jo^$9o$9-3b$orjjb20kdlc3&&b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DEBUG', True) in ['True', 1]
 
 ALLOWED_HOSTS = []
 
 if DEBUG is False:
-    ALLOWED_HOSTS = ['pm-dt.com.ua']
-    CSRF_TRUSTED_ORIGINS = ['https://pm-dt.com.ua']
+    ALLOWED_HOSTS = [os.environ.get('APP_DOMAIN')]
+    CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('APP_DOMAIN')}"]
 
 
 # Application definition
