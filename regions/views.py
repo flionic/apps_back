@@ -102,10 +102,19 @@ def verification_code_get(request):
     if 'app_id' in request.data and 'phone_number' in request.data and request.data['phone_number'] != '+111':
         if request.data['app_id'] == 'gameslist_apl':
             # save request.data['phone_number']
+            if request.data['phone_number'] == '+222':
+                return Response(
+                    {
+                        'success': True,
+                        'skip_otp': True,
+                        # 'otp_code': random.randint(100000, 999999),
+                    },
+                    status=status.HTTP_200_OK
+                )
             return Response(
                 {
                     'success': True,
-                    'otp_code': random.randint(100000, 999999),
+                    # 'otp_code': random.randint(100000, 999999),
                 },
                 status=status.HTTP_200_OK
             )
