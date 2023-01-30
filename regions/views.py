@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render
 
 from django.http import HttpResponse, JsonResponse
@@ -70,9 +72,10 @@ def check_user(request):
     must be have: app_id, location_phone, location_facebook, user_lang, test_mode
     """
     if 'app_id' in request.data:
-        print(request.data)
-        if request.data['app_id'] == 'dating_artma':
-            if ('test_mode' in request.data) and (request.data['test_mode'] is True) or request.data['test_mode'] == 1:
+        # client_ip = get_client_ip(request)
+        # print(client_ip)
+        if request.data['app_id'] == 'dating_artma1':
+            if ('test_mode' in request.data) and ((request.data['test_mode'] is True) or request.data['test_mode'] == 1):
                 return Response(
                     {
                         'grant_access': True,
@@ -88,6 +91,50 @@ def check_user(request):
     return Response(
         {
             'grant_access': False,
+        },
+        status=status.HTTP_403_FORBIDDEN
+    )
+
+
+@csrf_exempt
+@api_view(['POST'])
+def verification_code_get(request):
+    if 'app_id' in request.data and 'phone_number' in request.data and request.data['phone_number'] != '+111':
+        if request.data['app_id'] == 'gameslist_apl':
+            # save request.data['phone_number']
+            return Response(
+                {
+                    'success': True,
+                    'otp_code': random.randint(100000, 999999),
+                },
+                status=status.HTTP_200_OK
+            )
+
+    return Response(
+        {
+            'success': False,
+        },
+        status=status.HTTP_403_FORBIDDEN
+    )
+
+
+@csrf_exempt
+@api_view(['POST'])
+def verification_code_approve(request):
+    if 'app_id' in request.data:
+        if request.data['app_id'] == 'gameslist_apl':
+            # save request.data['phone_number']
+            if ('phone_number' in request.data) and ('otp_code' in request.data):
+                return Response(
+                    {
+                        'success': True,
+                    },
+                    status=status.HTTP_200_OK
+                )
+
+    return Response(
+        {
+            'success': False,
         },
         status=status.HTTP_403_FORBIDDEN
     )
