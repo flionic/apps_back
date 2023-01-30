@@ -124,13 +124,22 @@ def verification_code_approve(request):
     if 'app_id' in request.data:
         if request.data['app_id'] == 'gameslist_apl':
             # save request.data['phone_number']
-            if ('phone_number' in request.data) and ('otp_code' in request.data):
-                return Response(
-                    {
-                        'success': True,
-                    },
-                    status=status.HTTP_200_OK
-                )
+            if 'phone_number' in request.data and 'otp_code' in request.data:
+                if request.data['phone_number'] == '+111' and request.data['otp_code'] == '111111':
+                    return Response(
+                        {
+                            'success': True,
+                        },
+                        status=status.HTTP_200_OK
+                    )
+                else:
+                    return Response(
+                        {
+                            'success': False,
+                            'error_message': "OTP code doesn't match",
+                        },
+                        status=status.HTTP_200_OK
+                    )
 
     return Response(
         {
